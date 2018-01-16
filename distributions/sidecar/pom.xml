@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+    <artifactId>distributions-parent</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+  </parent>  
+  <groupId>com.zte.dexcloud.service-mesh.sidecar.distributions</groupId>
+  <artifactId>mesh-sidecar</artifactId>
+  <version>1.1.0-SNAPSHOT</version>
+  <name>com/zte/dexcloud/service-mesh/sidecar/distributions/sidecar</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <packageid>service-mesh-sidecar</packageid>
+    <version.output>target/version</version.output>
+    <openresty-ext.artifactId>openresty-ext-consul</openresty-ext.artifactId>
+    <html.dir>openresty/nginx/html</html.dir>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>linux</id>
+      <activation>
+          <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+            <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+            <artifactId>apiroute</artifactId>
+            <type>tar.gz</type>      
+            <classifier>${classifier.linux64}</classifier>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+            <artifactId>redis-ext</artifactId>
+            <type>tar.gz</type>      
+            <classifier>${classifier.linux64}</classifier>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+          <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+          <artifactId>openresty-ext</artifactId>
+          <type>tar.gz</type>      
+          <classifier>${classifier.linux64}</classifier>
+          <version>${project.version}</version>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+
+      <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+                <id>unpacktolinux64</id>
+                <goals>
+                    <goal>unpack</goal>
+                </goals>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <artifactItems>
+                      <artifactItem>
+                        <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+                        <artifactId>apiroute</artifactId>
+                        <type>tar.gz</type>
+                        <classifier>${classifier.linux64}</classifier>
+                      </artifactItem>               
+                      <artifactItem>
+                        <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+                        <artifactId>redis-ext</artifactId>
+                        <type>tar.gz</type>      
+                        <classifier>${classifier.linux64}</classifier>           
+                      </artifactItem> 
+                      <artifactItem>
+                        <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+                        <artifactId>openresty-ext</artifactId>
+                        <type>tar.gz</type>      
+                        <classifier>${classifier.linux64}</classifier>          
+                      </artifactItem>  
+                      <artifactItem>
+                        <groupId>com.zte.dexcloud.service-mesh.sidecar.plugins</groupId>
+                        <artifactId>cross-domain-plugin</artifactId>
+                        <type>zip</type>
+                      </artifactItem>                       
+                  </artifactItems>
+                  <excludes>**/*.bat,**/*.cmd,**/*.exe</excludes>
+                  <outputDirectory>${linux64outputdir}</outputDirectory>
+                  <overWriteReleases>false</overWriteReleases>
+                  <overWriteSnapshots>true</overWriteSnapshots>
+                  <outputAbsoluteArtifactFilename>true</outputAbsoluteArtifactFilename>
+                </configuration>
+            </execution> 
+          </executions>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-resources-linux</id>                 
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${linux64outputdir}</outputDirectory>
+                <includeEmptyDirs>true</includeEmptyDirs>
+                <resources>     
+                  <resource>
+                    <directory>src/assembly/resources/</directory>
+                    <filtering>false</filtering>
+                    <includes>
+                      <include>**/*</include>
+                    </includes>
+                    <excludes>
+                      <exclude>**/*.bat</exclude>
+                    </excludes>
+                  </resource>  
+                </resources>
+                <overwrite>true</overwrite>
+              </configuration>
+            </execution>
+            <execution>
+              <id>copy-resources-dockerfile</id>                 
+              <phase>process-resources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>            
+                <outputDirectory>${version.output}</outputDirectory>
+                <includeEmptyDirs>true</includeEmptyDirs>
+                <resources>     
+                  <resource>
+                    <directory>${dockerFileDir}</directory>
+                    <filtering>false</filtering>
+                    <includes>
+                      <include>**/*</include>
+                    </includes>
+                  </resource>  
+                </resources>
+                <overwrite>true</overwrite>
+              </configuration>
+            </execution>
+            <execution>
+              <id>copy-resources-blueprint</id>                 
+              <phase>process-resources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>            
+                <outputDirectory>${version.output}/blueprint</outputDirectory>
+                <includeEmptyDirs>true</includeEmptyDirs>
+                <resources>     
+                  <resource>
+                    <directory>${blueprintFileDir}</directory>
+                    <filtering>false</filtering>
+                    <includes>
+                      <include>**/*</include>
+                    </includes>
+                  </resource>  
+                </resources>
+                <overwrite>true</overwrite>
+              </configuration>
+            </execution>        
+          </executions>
+        </plugin>  
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>distribution</id>
+              <phase>package</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                <target name="distribution">
+
+                  <tstamp>
+                    <format property="last.updated" pattern="yyyy-MM-dd HH:mm:ss"/>
+                  </tstamp>
+                  <echo file="${linux64outputdir}/version.properties" message="build.time=${last.updated}${line.separator}build.version=${project.version}"/>
+                  <tar destfile="${version.output}/${packageid}-${project.version}-${classifier.linux64}.tar.gz" longfile="posix" compression="gzip">
+                    <tarfileset dir="${linux64outputdir}" prefix="${packageid}" filemode="0644" dirmode="0755">
+                      <exclude name="**/*.sh"/>
+                      <exclude name="openresty/nginx/sbin/nginx"/>
+                      <exclude name="apiroute/apiroute"/>
+                      <exclude name="redis/redis-*"/>
+                    </tarfileset>
+                    <tarfileset dir="${linux64outputdir}" prefix="${packageid}" filemode="0755" dirmode="0755">
+                      <include name="**/*.sh"/>
+                      <include name="openresty/nginx/sbin/nginx"/>
+                      <include name="apiroute/apiroute"/>
+                      <include name="redis/redis-*"/>
+                    </tarfileset>
+                  </tar>
+                </target>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin> 
+
+
+      </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>windows</id>
+      <dependencies>
+        <dependency>
+            <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+            <artifactId>apiroute</artifactId>
+            <type>zip</type>
+            <classifier>${classifier.win64}</classifier>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+            <artifactId>redis-ext</artifactId>
+            <type>zip</type>
+            <classifier>${classifier.win64}</classifier>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+          <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+          <artifactId>openresty-ext</artifactId>
+          <type>zip</type>      
+          <classifier>${classifier.win64}</classifier>
+          <version>${project.version}</version>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+      <build>
+      <plugins>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+                <id>unpacktowin64</id>
+                <goals>
+                    <goal>unpack</goal>
+                </goals>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <artifactItems>
+                      <artifactItem>
+                        <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+                        <artifactId>apiroute</artifactId>
+                        <type>zip</type>
+                        <classifier>${classifier.win64}</classifier>  
+                      </artifactItem>
+                      <artifactItem>
+                        <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+                        <artifactId>redis-ext</artifactId>
+                        <type>zip</type>      
+                        <classifier>${classifier.win64}</classifier>        
+                      </artifactItem>
+                      <artifactItem>
+                        <groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+                        <artifactId>openresty-ext</artifactId>
+                        <type>zip</type>      
+                        <classifier>${classifier.win64}</classifier>            
+                      </artifactItem>
+                      <artifactItem>
+                        <groupId>com.zte.dexcloud.service-mesh.sidecar.plugins</groupId>
+                        <artifactId>cross-domain-plugin</artifactId>
+                        <type>zip</type>
+                      </artifactItem>             
+                  </artifactItems>
+                  <excludes>**/*.sh</excludes>
+                  <outputDirectory>${win64outputdir}</outputDirectory>
+                  <overWriteReleases>false</overWriteReleases>
+                  <overWriteSnapshots>true</overWriteSnapshots>
+                  <outputAbsoluteArtifactFilename>true</outputAbsoluteArtifactFilename>
+                </configuration>
+            </execution>            
+          </executions>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-resources-${win64id}</id>                 
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${win64outputdir}</outputDirectory>
+                <includeEmptyDirs>true</includeEmptyDirs>
+                <resources>     
+                  <resource>
+                    <directory>src/assembly/resources/</directory>
+                    <filtering>false</filtering>
+                    <includes>
+                      <include>**/*</include>
+                    </includes>
+                    <excludes>
+                      <exclude>**/*.sh</exclude>
+                    </excludes>
+                  </resource>  
+                </resources>
+                <overwrite>true</overwrite>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>   
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+            <execution>
+                <id>distribution-windows</id>
+                <phase>package</phase>
+                <goals>
+                    <goal>run</goal>
+                </goals>
+                <configuration>
+                <target name="distribution">
+                  <tstamp>
+                    <format property="last.updated" pattern="yyyy-MM-dd HH:mm:ss"/>
+                  </tstamp>
+                  <echo file="${linux64outputdir}/version.properties" message="build.time=${last.updated}${line.separator}build.version=${project.version}"/>
+                  <zip destfile="${version.output}/${packageid}-${project.version}-${classifier.win64}.zip" update="true">
+                    <zipfileset dir="${win64outputdir}" prefix="${packageid}" includes="**"/>
+                  </zip>
+                  <attachartifact file="${version.output}/${packageid}-${project.version}-${classifier.win64}.zip" classifier="${classifier.win64}" type="zip"/>
+                </target>                 
+
+                </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+      </plugins>
+      </build>
+    </profile>
+
+  </profiles>  
+
+
+  <dependencies>
+    <dependency>
+      <groupId>com.zte.dexcloud.service-mesh.sidecar.plugins</groupId>
+      <artifactId>cross-domain-plugin</artifactId>
+      <type>zip</type>
+      <version>${project.version}</version>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+  
+
+</project>
+

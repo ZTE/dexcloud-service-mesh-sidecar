@@ -1,0 +1,42 @@
+{
+    "kind": "route",
+    "apiVersion": "v1",
+    "status": "1",
+    "metadata": {
+        "name": "httpservice",
+        "namespace": "",
+        "uid": "",
+        "updateTimestamp": "2017-06-12T02:25:31Z",
+        "labels": {
+            "enable_router": "true"
+        },
+        "annotations": null
+    },
+    "spec": {
+        "visualRange": "0",
+        "url": "/httpservice",
+        "publish_port": "28001",
+        "publish_protocol": "https",
+        "host": "httpservice",
+        "apijson": "/swagger.json",
+        "apijsontype": "1",
+        "metricsUrl": "/admin/metrics",
+        "lb_policy": "ip_hash",
+        "consulServiceName": "httpservice",
+        "useOwnUpstream": "1",
+        "enable_ssl": true,
+        "control": "0",
+        "scenario": 1,
+        "enable_refer_match": "xxxx",
+        "connect_timeout": "",
+        "send_timeout": "120",
+        "read_timeout": "120",
+        "nodes": [
+            {
+                "ip": "127.0.0.1",
+                "port": 2222,
+                "weight": 0
+            }
+        ]
+    }
+}

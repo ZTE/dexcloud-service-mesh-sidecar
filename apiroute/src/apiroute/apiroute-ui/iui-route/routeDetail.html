@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title id="org_openo_msb_route_detail_title" name_i18n="org_openo_msb_route_ui_i18n"></title>
+<link rel="shortcut icon" href="img/zte_logo_16.gif" />
+<link
+	href="../thirdparty/fontAwesome/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="../thirdparty/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="css/base.css" rel="stylesheet" type="text/css" />  
+<link href="css/serviceDetail.css" rel="stylesheet" type="text/css" />
+<link href="../thirdparty/dataTables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../thirdparty/animate/animate.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+.ms-controller {
+	visibility: hidden
+}
+</style>
+ <script type="text/javascript">
+
+      var routeBasePath="/api/route/v1";
+
+</script>
+
+</head>
+<body class="ms-controller"  ms-controller="detailController" >
+
+<div  id="routeHead">
+        <div class="navbar-inner container-fluid" id="top-bar">
+            <header class="row-fluid">            
+            <div class="logoimg"><img class="logo" src="img/netnumenLogo.png" alt="Logo"></div>
+            <div class="chineseTitle" id="org_openo_msb_route_chinese_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            <div class="englishTitle" id="org_openo_msb_route_english_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            </header>
+        </div>
+</div>
+ <script type="text/javascript">if (self != top) {document.getElementById("routeHead").style.display="none";}</script>
+
+
+
+
+ <div class="row container-fluid" >
+
+  <div class="baseInfoDiv">
+    <div  class="detailimg"><i class="fa fa-cloud fa-pull-left serviceimg" ></i></div>
+    <div  class="baseinfo">
+        <div>
+          <div class="servicename" ms-text="routeInfo.serviceName"></div>
+          <div class="circle circle_green" title="org_openo_msb_route_detail_status_valid" name_i18n="org_openo_msb_route_ui_i18n" ms-visible="routeInfo.status=='1'"></div>  
+          <div class="circle circle_red" title="org_openo_msb_route_detail_status_invalid" name_i18n="org_openo_msb_route_ui_i18n" ms-visible="routeInfo.status=='0'"></div>        
+        </div>
+        <div>
+           <span id="org_openo_msb_route_detail_version" name_i18n="org_openo_msb_route_ui_i18n"></span>
+           <span class="greycolor" ms-text="routeInfo.serviceVersion"></span>
+            <span class="baseinfospace" id="org_openo_msb_route_detail_routeType" name_i18n="org_openo_msb_route_ui_i18n"></span>
+            <span class="greycolor" ms-text="routeUtil.showProtocolName(routeInfo.routeType)"></span>
+            <span class="baseinfospace"  id="org_openo_msb_route_detail_publishUrl" name_i18n="org_openo_msb_route_ui_i18n"></span>
+            <span class="greycolor"  id="publishUrlDiv" ms-text="routeInfo.publishUrl"></span>
+             <span><a href="#" id="clipboardBtn" data-clipboard-action="copy" data-clipboard-target="#publishUrlDiv" title="Copy publishUrl to Clipboard"><i class="fa fa-clipboard" aria-hidden="true"></i></a></span>
+      
+        </div>
+        <div>
+            <span  id="org_openo_msb_route_detail_updateTimestamp" name_i18n="org_openo_msb_route_ui_i18n"></span>
+            <span class="todo-tasklist-date"><i class="fa fa-calendar"></i></span>
+            <span class="greycolor" ms-text="routeUtil.toLocaleTime(routeInfo.updateTimestamp)"></span>
+        </div>
+    </div>
+
+  </div>
+
+
+ <div class="row row1 container-fluid">
+
+<ul class="nav nav-tabs" id="panelTab" style="margin-top: 10px;"  ms-visible="routeInfo.routeType=='api'">
+  <li  class="active" ><a href="#serviceInfoPanel" data-toggle="tab" id="org_openo_msb_route_detail_serviceInfoPanel" name_i18n="org_openo_msb_route_ui_i18n"></a></li>
+  <li ><a href="#apidocPanel" data-toggle="tab" ms-click="showApiDoc()" id="org_openo_msb_route_detail_apidocPanel" name_i18n="org_openo_msb_route_ui_i18n"></a></li>
+  <li ><a href="#metricsPanel" data-toggle="tab" ms-click="showMetrics()" id="org_openo_msb_route_detail_metricsPanel" name_i18n="org_openo_msb_route_ui_i18n"></a></li>   
+</ul>
+<div class="tab-content" >
+ <div id="serviceInfoPanel" class="tab-pane active"> 
+    <div class="form-body">
+
+         <div class="form-title">
+                <span id="org_openo_msb_route_detail_baseinfo" name_i18n="org_openo_msb_route_ui_i18n"></span>
+         </div>
+       <div class="row">
+    
+          <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_routeName" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+              <span class="greycolor col-xs-7 " ms-text="routeInfo.routeName"></span>                   
+          </div>
+           <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6"  ms-visible="routeInfo.routeType=='api'">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_routeVersion" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+             <span class="greycolor col-xs-7 " ms-text="routeInfo.routeVersion"></span>           
+          </div>    
+        </div>  
+
+
+        <div class="row">
+    
+          <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_url" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+              <span class="greycolor col-xs-7 "  ms-text="routeInfo.url"></span>                   
+          </div>
+           <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span>Host：</span></label> 
+             <span class="greycolor col-xs-7 " ms-text="routeInfo.host"></span>           
+          </div>    
+        </div> 
+
+
+         <div class="row">
+    
+          <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_namespace" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+              <span class="greycolor col-xs-7 "  ms-text="routeInfo.namespace"></span>                   
+          </div>
+           <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_lb_policy" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+             <span class="greycolor col-xs-7 " ms-text="routeInfo.lb_policy"></span>           
+          </div>    
+        </div> 
+
+        <div class="row">
+    
+          <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_publish_protocol" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+              <span class="greycolor col-xs-7 " ms-text="routeInfo.publish_protocol"></span>                   
+          </div>
+           <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_publish_port" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+             <span class="greycolor col-xs-7 " ms-text="routeInfo.publish_port"></span>           
+          </div>    
+        </div> 
+
+
+         <div class="row" ms-visible="routeInfo.routeType=='api'">
+    
+          <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_apiJson" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+              <span class="greycolor col-xs-7 "><a href="#" onclick="routeUtil.generate_apiUrl('apijson')" ms-text="routeInfo.apiJson"></a></span>                   
+          </div>
+           <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span id="org_openo_msb_route_detail_metricsUrl" name_i18n="org_openo_msb_route_ui_i18n"></span></label> 
+             <span class="greycolor col-xs-7 "><a href="#"  onclick="routeUtil.generate_apiUrl('admin')"  ms-text="routeInfo.metricsUrl"></a></span>           
+          </div>    
+        </div> 
+
+  <div class="form-title">
+                <span id="org_openo_msb_route_detail_routepolicy" name_i18n="org_openo_msb_route_ui_i18n"></span>
+         </div>
+
+       <div class="row">    
+          <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span>enable_ssl：</span></label> 
+              <span class="greycolor col-xs-7 " ms-html="routeUtil.showEnableSet(routeInfo.enable_ssl)"></span>                   
+          </div>
+           <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span>enable_refer_match：</span></label> 
+             <span class="greycolor col-xs-7 " ms-html="routeUtil.showEnableSet4String(routeInfo.enable_refer_match)"></span>           
+          </div>    
+        </div> 
+         
+         <div class="row">
+    
+          <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span>connect_timeout：</span></label> 
+              <span class="greycolor col-xs-7 "  ms-text="routeInfo.connect_timeout"></span>                   
+          </div>
+           <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span>send_timeout：</span></label> 
+             <span class="greycolor col-xs-7 " ms-text="routeInfo.send_timeout"></span>           
+          </div>    
+        </div> 
+        
+        <div class="row">
+    
+          <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span>read_timeout：</span></label> 
+              <span class="greycolor col-xs-7 " ms-text="routeInfo.read_timeout"></span>                   
+          </div>
+           <div class="form-group col-xs-12 col-sm-6 col-md-6  col-lg-6">
+             <label class="control-label col-xs-3 "><span></span></label> 
+             <span class="greycolor col-xs-7 "></span>           
+          </div>    
+        </div>   
+
+
+     </div> 
+
+     <div class="form-title">
+                <span id="org_openo_msb_route_detail_nodes" name_i18n="org_openo_msb_route_ui_i18n"></span>
+    </div>
+   <div class="row">
+
+    <div class="col-xs-6" style="padding-left:80px">
+        <table class="node">
+                                   <thead>
+                                      <tr>
+                                         <th id="org_openo_msb_route_detail_node_no" name_i18n="org_openo_msb_route_ui_i18n" width="20%" ></th>
+                                         <th width="40%">IP</th>
+                                         <th width="40%">PORT</th>                                         
+                                         
+                                      </tr>                                    
+                                   
+                                   </thead>
+                                   <tbody ms-each-node="routeInfo.nodes">
+                                      <tr>
+                                         <td>{{$index+1}}</td>
+                                         <td ms-text="node.ip"></td>
+                                         <td ms-text="node.port"></td>
+                                      </tr> 
+                                   </tbody>
+                                   </table>
+   </div>
+
+   </div>
+
+<div class="row closeBtn">
+
+    <div class="roleConfirm" ><a class="btn btn-primary" ms-click="routeUtil.closePage" id="org_openo_msb_route_detail_btn_close" name_i18n="org_openo_msb_route_ui_i18n"></a></div>
+
+  </div>
+
+ </div>
+
+  <div id="apidocPanel" class="tab-pane"  ms-visible="routeInfo.routeType=='api'"> 
+   <iframe id="apidocFrame" width="100%" scrolling="no"  marginheight="0" frameborder="0"  name="apidocFrame"  class="page-mainIframeisWare"  ></iframe>
+   </div>
+
+    <div id="metricsPanel" class="tab-pane"  ms-visible="routeInfo.routeType=='api'"> 
+ <iframe id="metricsFrame"  width="100%" scrolling="no" marginheight="0" frameborder="0"   name="metricsPage"  class="page-mainIframeisWare"  ></iframe>
+   </div>
+
+</div>
+</div>
+
+
+  
+
+
+<script src="../thirdparty/clipboard/clipboard.min.js"></script>
+
+<script type="text/javascript"  src="../thirdparty/jquery/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="../thirdparty/jquery.i18n/jquery.i18n.properties.js"></script>
+  <script type="text/javascript"  src="../thirdparty/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript"  src="../thirdparty/dataTables/jquery.dataTables.min.js"></script>
+  
+    <script type="text/javascript"  src="../thirdparty/iframeResizer/iframeResizer.min.js"></script>
+ <script type="text/javascript" src="../thirdparty/iframeResizer/iframeResizer.contentWindow.min.js"></script>
+  <script src="../thirdparty/bootstrap/js/bootstrap-notify.js"></script>
+	<script type="text/javascript"	src="../thirdparty/avalon/avalon.js"></script>
+  <script src="i18n/loadi18nApp_iui-route_view.js"></script>  
+  <script src="js/util/routeUtil.js"></script>     
+	<script type="text/javascript"   src="js/controller/detailController.js"></script>
+ 
+
+  <script type="text/javascript">
+
+$(function(){
+
+$('iframe').iFrameResize({checkOrigin:false});
+ loadPropertiesSideMenu('', 'msb-iui-route-i18n', 'i18n/'); 
+ avalon.scan();
+ vm.viewHttpRoute();
+
+
+    var clipboard = new Clipboard('#clipboardBtn');
+    clipboard.on('success', function(e) {
+       routeUtil.notify('',$.i18n.prop("org_openo_msb_route_detail_clipboard_success"),'success');  
+    });
+
+});
+
+
+</script>
+	
+</body>
+</html>

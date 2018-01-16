@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.zte.dexcloud.service-mesh</groupId>
+        <artifactId>mesh-sidecar-parent</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent> 
+  	<groupId>com.zte.dexcloud.service-mesh.sidecar</groupId>
+	<artifactId>apiroute</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
+    <name>com/zte/dexcloud/service-mesh/sidecar/apiroute</name>
+	<packaging>pom</packaging>
+	
+ 	<properties>
+		<app.exec.name>apiroute</app.exec.name>
+		<packageid>apiroute</packageid>
+		<go.output>bin</go.output>
+		<go.version.output>${go.output}/version</go.version.output>
+	</properties>
+    
+	<profiles>
+      <profile>
+        <id>linux</id>
+        <properties>
+            <targetArch>amd64</targetArch>
+            <targetOs>linux</targetOs>
+            <app.exec.name>apiroute</app.exec.name>
+		</properties>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
+
+        <build>
+          <directory>${basedir}${file.separator}bin</directory>
+
+          <plugins>
+			<plugin>
+				<groupId>com.igormaznitsa</groupId>
+				<artifactId>mvn-golang-wrapper</artifactId>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>                 
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>            
+							<outputDirectory>${go.output}</outputDirectory>
+							<includeEmptyDirs>true</includeEmptyDirs>
+							<resources>
+								<resource>
+									<directory>src/${project.artifactId}</directory>
+									<filtering>false</filtering>
+									<includes>
+										<include>apiroute-ui/**</include>
+										<include>conf/**</include>
+										<include>swagger/**</include>
+									</includes>
+									<excludes>
+										<exclude>apiroute-ui/api-doc/3.0/**</exclude>
+									</excludes>
+								</resource>
+								<resource>
+									<directory>src/assembly/resources</directory>
+									<filtering>false</filtering>
+									<includes>
+										<include>**.sh</include>
+									</includes>
+								</resource>
+							</resources>
+							<overwrite>true</overwrite>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>distribution</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target name="distribution">
+								<tar destfile="${go.version.output}/${packageid}-${project.version}-${classifier.linux64}.tar.gz" longfile="posix" compression="gzip">
+									<tarfileset dir="${go.output}" prefix="${packageid}" filemode="0644" dirmode="0755">
+										<exclude name="antrun/**"/>
+										<exclude name="version/**"/>       
+										<exclude name="**/*.sh"/> 
+										<exclude name="apiroute"/>            	
+									</tarfileset>
+									<tarfileset dir="${go.output}" prefix="${packageid}" filemode="0755" dirmode="0755">
+										<include name="**/*.sh"/>
+										<include name="apiroute"/>                 	
+									</tarfileset>
+								</tar>
+								<attachartifact file="${go.version.output}/${packageid}-${project.version}-${classifier.linux64}.tar.gz" classifier="${classifier.linux64}" type="tar.gz"/> 
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+          </plugins>
+        </build>    
+      </profile>
+
+      <profile>
+        <id>windows</id>
+
+        <properties>
+            <targetArch>amd64</targetArch>
+            <targetOs>windows</targetOs>
+            <app.exec.name>apiroute.exe</app.exec.name>
+		</properties>
+
+
+          <build>
+          	<directory>${basedir}${file.separator}bin</directory>
+            <plugins>
+	          <plugin>
+				<groupId>com.igormaznitsa</groupId>
+				<artifactId>mvn-golang-wrapper</artifactId>
+			  </plugin>
+
+			  <plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources-windows</id>                 
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>      
+							<outputDirectory>${go.output}</outputDirectory>
+							<includeEmptyDirs>true</includeEmptyDirs>
+							<resources>
+								<resource>
+									<directory>src/${project.artifactId}</directory>
+									<filtering>false</filtering>
+									<includes>
+										<include>apiroute-ui/**</include>
+										<include>conf/**</include>
+										<include>swagger/**</include>
+									</includes>
+									<excludes>
+										<exclude>apiroute-ui/api-doc/3.0/**</exclude>
+									</excludes>
+								</resource>
+								<resource>
+									<directory>src/assembly/resources</directory>
+									<filtering>false</filtering>
+									<includes>
+										<include>**.bat</include>
+									</includes>
+								</resource>
+							</resources>
+							<overwrite>true</overwrite>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                  <execution>
+                      <id>distribution-windows</id>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>run</goal>
+                      </goals>
+                      <configuration>
+                         <target name="distribution">
+                            <zip destfile="${go.version.output}/${packageid}-${project.version}-${classifier.win64}.zip" update="true">
+                              <zipfileset dir="${go.output}" prefix="${packageid}" includes="**">
+                              <exclude name="antrun/**"/>
+                              </zipfileset>
+                            </zip>
+                            <attachartifact file="${go.version.output}/${packageid}-${project.version}-${classifier.win64}.zip" classifier="${classifier.win64}" type="zip"/>
+                        </target>
+                      </configuration>
+                  </execution>
+                </executions>
+              </plugin>
+            </plugins>
+          </build>
+    
+      </profile>
+    </profiles>
+
+</project>

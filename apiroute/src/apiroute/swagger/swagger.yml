@@ -1,0 +1,284 @@
+swagger: "2.0"
+info: {}
+basePath: /api/route/v1
+paths:
+  /cache/internal/datasynccache/namelist:
+    get:
+      tags:
+      - cache
+      description: get data cache:name namespace
+      operationId: CacheController.GetNameList
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/util.NameAndNamespace'
+        "500":
+          description: get cache failed
+  /cache/internal/datasynccache/namespace/{namespace}/servicename/{servicename}/versions:
+    get:
+      tags:
+      - cache
+      description: get data cache:version path
+      operationId: CacheController.GetVersionsAndPaths
+      parameters:
+      - in: path
+        name: namespace
+        description: namespace
+        type: string
+      - in: path
+        name: servicename
+        description: servicename
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{map[string]string} version,path'
+        "500":
+          description: get cache failed
+  /config/defaultports:
+    get:
+      tags:
+      - config
+      description: get default ports
+      operationId: ConfController.GetDefaultPorts
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.HTTPHTTPSDefaultPorts'
+        "500":
+          description: get ports from config file failed
+  /health/:
+    get:
+      tags:
+      - health
+      description: Get health status
+      operationId: HealthController.GetHealthStatus
+      responses:
+        "200":
+          description: '{string} Healthy'
+        "500":
+          description: Unhealthy
+  /namespaces/:
+    get:
+      tags:
+      - namespaces
+      description: get all namespaces
+      operationId: NamespacesController.get all namespaces
+      responses:
+        "200":
+          description: '{[]string} namesapce'
+        "500":
+          description: get namespaces list error
+  /routelist/:
+    get:
+      tags:
+      - routelist
+      description: get {namespace}'s route abstract info list
+      operationId: RouteListController.get route abstract info list
+      parameters:
+      - in: query
+        name: namespace
+        description: one namespace
+        type: string
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.RouteAbstractInfo'
+        "500":
+          description: read redis failed
+  /routes/internal:
+    get:
+      tags:
+      - routes
+      description: get route detail info by router key
+      operationId: RoutesController.get route detail info
+      parameters:
+      - in: query
+        name: publishport
+        description: publish port.
+        type: integer
+        format: int64
+      - in: query
+        name: routetype
+        description: api|iui|custom
+        required: true
+        type: string
+      - in: query
+        name: routename
+        description: route name
+        required: true
+        type: string
+      - in: query
+        name: routeversion
+        description: route version
+        type: string
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.RouteDetailInfo'
+        "403":
+          description: require fields are nil
+  /routes/servicename/{servicename}/version/{serviceversion}:
+    get:
+      tags:
+      - routes
+      description: get route detail info by servicekey
+      operationId: RoutesController.get route detail info
+      parameters:
+      - in: path
+        name: servicename
+        description: servicename
+        required: true
+        type: string
+      - in: path
+        name: serviceversion
+        description: serviceversion
+        required: true
+        type: string
+      - in: query
+        name: namespace
+        description: namespace
+        type: string
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.RouteDetailInfo'
+        "403":
+          description: require fields are nil
+definitions:
+  models.HTTPHTTPSDefaultPorts:
+    title: HTTPHTTPSDefaultPorts
+    type: object
+    properties:
+      httpPort:
+        type: integer
+        format: int64
+      httpsPort:
+        type: integer
+        format: int64
+  models.RouteAbstractInfo:
+    title: RouteAbstractInfo
+    type: object
+    properties:
+      namespace:
+        type: string
+      publishPort:
+        type: integer
+        format: int64
+      publishProtocol:
+        type: string
+      publishUrl:
+        type: string
+      routeName:
+        type: string
+      routeType:
+        type: string
+      routeVersion:
+        type: string
+      serviceName:
+        type: string
+      serviceVersion:
+        type: string
+  models.RouteDetailInfo:
+    title: RouteDetailInfo
+    type: object
+    properties:
+      apiVersion:
+        type: string
+      kind:
+        type: string
+      metadata:
+        $ref: '#/definitions/models.RouteMetaDataObjet'
+      spec:
+        $ref: '#/definitions/models.RouteSpecObject'
+      status:
+        type: string
+  models.RouteMetaDataObjet:
+    title: RouteMetaDataObjet
+    type: object
+    properties:
+      annotations: {}
+      labels:
+        additionalProperties:
+          type: string
+      name:
+        type: string
+      namespace:
+        type: string
+      serviceName:
+        type: string
+      serviceVersion:
+        type: string
+      uid:
+        type: string
+      updateTimestamp:
+        type: string
+      version:
+        type: string
+  models.RouteNodeObject:
+    title: RouteNodeObject
+    type: object
+    properties:
+      ip:
+        type: string
+      lb_server_params:
+        type: string
+      port:
+        type: integer
+        format: int64
+      weight:
+        type: integer
+        format: int64
+  models.RouteSpecObject:
+    title: RouteSpecObject
+    type: object
+    properties:
+      apijson:
+        type: string
+      apijsontype:
+        type: string
+      connect_timeout:
+        type: string
+      consulServiceName:
+        type: string
+      control:
+        type: string
+      enable_refer_match:
+        type: string
+      enable_ssl:
+        type: boolean
+      host:
+        type: string
+      lb_policy:
+        type: string
+      metricsUrl:
+        type: string
+      nodes:
+        type: array
+        items:
+          $ref: '#/definitions/models.RouteNodeObject'
+      publish_port:
+        type: string
+      publish_protocol:
+        type: string
+      read_timeout:
+        type: string
+      scenario:
+        type: integer
+        format: int64
+      send_timeout:
+        type: string
+      url:
+        type: string
+      useOwnUpstream:
+        type: string
+      visualRange:
+        type: string
+  util.NameAndNamespace:
+    title: NameAndNamespace
+    type: object
+    properties:
+      Name:
+        type: string
+      Namespace:
+        type: string

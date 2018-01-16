@@ -1,0 +1,30 @@
+
+
+.huge {
+    font-size: 23px;
+    height: 60px;
+    word-wrap: break-word;
+    word-break: normal;
+}
+
+.panel-footer{
+  cursor: pointer;
+}
+
+.panel-primary {
+    border: 1px solid #e6e6e6;
+    }
+
+    .panel-primary>.panel-heading {
+    color: #00abff;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.pull-left {
+    color: #4d5761;
+}
+
+.pull-left:hover {
+    color: #1483cc;
+}

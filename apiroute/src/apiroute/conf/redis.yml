@@ -1,0 +1,14 @@
+--- 
+redis:
+  host: "127.0.0.1" 
+  port: 6379 
+  connectiontimeout: 2000 
+  dbindexroute: 0 
+  dbindexservice: 1 
+
+  pool:
+    maxtotal: 20 
+    maxidle: 30 
+    maxwaitmillis: 5000 
+    testonborrow: false 
+    testonreturn: true

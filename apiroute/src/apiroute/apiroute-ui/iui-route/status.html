@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title id="org_openo_msb_status_chart_status" name_i18n="org_openo_msb_route_ui_i18n"></title>
+<script src="../thirdparty/echarts/echarts.common.min.js"></script>
+<script src="../thirdparty/echarts/macarons.js"></script>
+<link
+	href="../thirdparty/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+href="../thirdparty/fontAwesome/css/font-awesome.min.css"
+rel="stylesheet" />
+<link href="css/base.css" rel="stylesheet" type="text/css" />  
+<link href="css/chart.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript"  src="../thirdparty/jquery/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="../thirdparty/jquery.i18n/jquery.i18n.properties.js"></script>
+<script type="text/javascript"  src="js/util/statusUtil.js"></script>
+<link href="../thirdparty/animate/animate.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<div  id="routeHead">
+        <div class="navbar-inner container-fluid" id="top-bar">
+            <header class="row-fluid">            
+            <div class="logoimg"><img class="logo" src="img/netnumenLogo.png" alt="Logo"></div>
+            <div class="chineseTitle" id="org_openo_msb_route_chinese_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            <div class="englishTitle" id="org_openo_msb_route_english_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            </header>
+        </div>
+</div>
+
+ <script type="text/javascript">
+ if (self != top) {document.getElementById("routeHead").style.display="none";}
+
+ var currentLang = navigator.language;  
+if(!currentLang) {currentLang = navigator.browserLanguage; } 
+if(currentLang.toLowerCase() != "zh-cn") {$("#logo").hide(); }
+ </script>
+
+<div class="form-title"><span id="routeName">Router</span><span id="org_openo_msb_status_chart_monitoring" name_i18n="org_openo_msb_route_ui_i18n"></span></div>
+<div class="container-fluid2 col-xs-12 col-md-6 col-sm-12 col-lg-6" >
+
+       <div class="row" style="margin-top:10px">
+         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 ">
+           <i class="fa fa-link fa-lg"></i> 
+           <span class="titlefont" id="org_openo_msb_status_chart_connection_statis" name_i18n="org_openo_msb_route_ui_i18n"></span>
+           
+         </div>
+        
+       </div>
+     <div class="separator-line"></div>
+ <div id="connectionBarChartDiv" style="height:360px;"></div>
+</div>
+
+<div class="container-fluid2 col-xs-12 col-md-6 col-sm-12 col-lg-6" >
+
+       <div class="row" style="margin-top:10px">
+         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 ">
+           <i class="fa fa-tasks fa-lg"></i> 
+           <span class="titlefont" id="org_openo_msb_status_chart_request_statis" name_i18n="org_openo_msb_route_ui_i18n"></span>
+        
+         </div>
+        
+       </div>
+     <div class="separator-line"></div>
+ <div id="statusLineChartDiv" style="height:360px;"></div>
+</div>
+
+
+
+<div class="container-fluid">
+
+       <div class="row">
+         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 ">
+           <i class="fa fa-internet-explorer  fa-lg"></i> 
+           <span class="titlefont" id="org_openo_msb_status_chart_history_access_statis" name_i18n="org_openo_msb_route_ui_i18n"></span>
+         
+
+         </div>
+        
+       </div>
+     <div class="separator-line"></div>
+
+</div>
+  
+
+  <div id="statisticsLineChartDiv" style="width: 100%;height:350px;"></div>
+</body>
+  <script src="i18n/loadi18nApp_iui-route_view.js"></script>
+  <script src="js/util/routeUtil.js"></script>
+  <script src="../thirdparty/bootstrap/js/bootstrap-notify.js"></script>
+<script type="text/javascript"  src="../thirdparty/iframeResizer/iframeResizer.min.js"></script>
+  <script type="text/javascript" src="../thirdparty/iframeResizer/iframeResizer.contentWindow.min.js"></script>
+   <script type="text/javascript">
+
+      var  param_visualRange=statusUtil.getQueryString("visualRange");
+      var apiBasePath="/api/router_metrics/v1";
+      if(param_visualRange!=null){
+        if(param_visualRange==1){
+          apiBasePath="/api/apigateway_metrics/v1";
+          $("#routeName").text("Apigateway");
+        } 
+        else if(param_visualRange==0){
+          apiBasePath="/api/router_metrics/v1";
+          $("#routeName").text("Router");
+        }
+      }
+
+</script>
+<script type="text/javascript">
+     
+$(function(){
+     loadPropertiesSideMenu('', 'msb-iui-route-i18n', 'i18n/'); 
+    statusUtil.initChart();
+});
+
+    </script>
+</html>

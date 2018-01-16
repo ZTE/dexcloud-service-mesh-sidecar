@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<link rel="shortcut icon" href="img/zte_logo_16.gif" />
+<link
+	href="../thirdparty/fontAwesome/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="../thirdparty/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="css/base.css" rel="stylesheet" type="text/css" />  
+<link href="css/cardTables.css" rel="stylesheet" type="text/css" />
+<link href="../thirdparty/dataTables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../thirdparty/animate/animate.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+.ms-controller {
+	visibility: hidden
+}
+</style>
+ <script type="text/javascript">
+
+      var routeBasePath="/api/route/v1";
+
+</script>
+
+</head>
+<body class="ms-controller"  ms-controller="routerController" >
+
+<div  id="routeHead">
+        <div class="navbar-inner container-fluid" id="top-bar">
+            <header class="row-fluid">            
+            <div class="logoimg"><img class="logo" src="img/netnumenLogo.png" alt="Logo"></div>
+            <div class="chineseTitle" id="org_openo_msb_route_chinese_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            <div class="englishTitle" id="org_openo_msb_route_english_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            </header>
+        </div>
+</div>
+ <script type="text/javascript">if (self != top) {document.getElementById("routeHead").style.display="none";}</script>
+
+
+
+<div id="servicesListDiv" style="background-color: #fff;">
+
+
+ <div class="searchDiv">  
+  <div class="searchTitle"><i class="icon fa fa-search"></i></div>
+     <div class="input-group searchInput"  >
+               <div class="input-group-btn" >
+                  <button type="button" class="btn btn-default 
+                     dropdown-toggle" data-toggle="dropdown">
+                     {{selectSearch.name}}
+                     <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" ms-each-search="searchTypeName">
+                     <li><a ms-click="setSearchType(search.name,search.index)">{{search.name}}</a></li>
+                  </ul>
+               </div><!-- /btn-group -->
+               <input type="text" class="form-control" placeholder=""   ms-keydown="searchService4keydown($event)" id="org_openo_msb_route_search_tip" name_i18n="org_openo_msb_route_ui_i18n"
+               ms-duplex="selectSearch.context" ms-visible="vm.selectSearch.index!=3 && vm.selectSearch.index!=6"/>
+
+               <select class="form-control m-b" ms-each="route_type"  name="routeType" ms-duplex="selectSearch.context" ms-visible="vm.selectSearch.index==3">             
+                       <option ms-attr-value='el'>{{el}}</option>
+               </select>
+
+               <select class="form-control m-b" ms-each="$publish_protocol"  name="publishProtocol" ms-duplex="selectSearch.context" ms-visible="vm.selectSearch.index==6">             
+                       <option ms-attr-value='el'>{{el}}</option>
+               </select>
+
+            </div><!-- /input-group -->
+           <div> <button type="button" class="btn btn-primary" ms-click="searchService()" id="org_openo_msb_route_btn_search" name_i18n="org_openo_msb_route_ui_i18n"></button>
+           </div>
+  </div>
+
+
+ <div class="row row1 container-fluid" >
+
+  <div class="title">
+            <span  ms-visible="vm.namespace!=''"><i class=" fa fa-cloud "></i> {{namespace}} -</span>
+            <span id="org_openo_msb_route_serviceList" name_i18n="org_openo_msb_route_ui_i18n"></span>      
+   </div>
+
+     <div class="row" data-name="route_zone" >
+
+       <table id="msbTable" class="table-card" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <td style="width:5%"></td>
+                <td id="org_openo_msb_route_servicename" name_i18n="org_openo_msb_route_ui_i18n" style="width:22%"></td>
+                <td id="org_openo_msb_route_version" name_i18n="org_openo_msb_route_ui_i18n" style="width:8%"></td>
+                <td id="org_openo_msb_route_routetype" name_i18n="org_openo_msb_route_ui_i18n" style="width:10%"></td>
+                <td id="org_openo_msb_route_publishUrl" name_i18n="org_openo_msb_route_ui_i18n"></td>  
+                <td></td>  
+                <td></td>  
+                <td id="org_openo_msb_route_form_node_control" name_i18n="org_openo_msb_route_ui_i18n" style="width:15%">操作</td>            
+            </tr>
+        </thead>      
+    </table>
+          
+
+      </div>
+
+ </div>
+
+</div>
+
+
+
+<script type="text/javascript"  src="../thirdparty/jquery/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="../thirdparty/jquery.i18n/jquery.i18n.properties.js"></script>
+
+  <script type="text/javascript"  src="../thirdparty/bootstrap/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript"  src="../thirdparty/dataTables/jquery.dataTables.min.js"></script>
+ <script type="text/javascript"  src="../thirdparty/dataTables/dataTables.rowGroup.js"></script>
+<script type="text/javascript"  src="../thirdparty/dataTables/dataTable.bootstrap_extended.js"></script>
+
+  <!--script type="text/javascript" src="../thirdparty/bootbox/bootbox.min.js"></script-->
+  <script src="../thirdparty/bootstrap/js/bootstrap-notify.js"></script>
+	<script type="text/javascript"	src="../thirdparty/avalon/avalon.js"></script>
+  <script src="i18n/loadi18nApp_iui-route_view.js"></script>
+  
+  <script src="js/util/routeUtil.js"></script>
+
+
+     
+	<script type="text/javascript"   src="js/controller/routerController.js"></script>
+  <script type="text/javascript" src="../thirdparty/iframeResizer/iframeResizer.contentWindow.min.js"></script>
+  <script type="text/javascript">
+
+$(function(){
+
+
+ loadPropertiesSideMenu('', 'msb-iui-route-i18n', 'i18n/'); 
+ avalon.scan();
+ vm.initMSBRoute();
+
+
+});
+</script>
+	
+</body>
+</html>

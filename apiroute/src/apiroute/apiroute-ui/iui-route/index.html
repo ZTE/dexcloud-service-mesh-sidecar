@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title id="org_openo_msb_discover_title" name_i18n="org_openo_msb_discover_ui_i18n"></title>
+<link rel="shortcut icon" href="img/zte_logo_16.gif" />
+<link href="../thirdparty/fontAwesome/css/font-awesome.min.css"	rel="stylesheet" />
+<link	href="../thirdparty/bootstrap/css/bootstrap.min.css"	rel="stylesheet" />
+
+
+<link href="css/base.css" rel="stylesheet" type="text/css" />
+<link href="css/namespace.css" rel="stylesheet" type="text/css" />
+<link href="../thirdparty/animate/animate.min.css" rel="stylesheet" type="text/css" />
+<style>
+.ms-controller {
+	visibility: hidden
+}
+</style>
+ <script type="text/javascript">
+
+
+      var routeBasePath="/api/route/v1";
+
+</script>
+
+</head>
+<body class="ms-controller"  ms-controller="namespaceController" 
+      ms-visible="vm.namespaceArray.length>1">
+<div  id="routeHead">
+        <div class="navbar-inner container-fluid" id="top-bar">
+            <header class="row-fluid">            
+            <div class="logoimg"><img class="logo" src="img/netnumenLogo.png" alt="Logo"></div>
+            <div class="chineseTitle" id="org_openo_msb_route_chinese_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            <div class="englishTitle" id="org_openo_msb_route_english_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            </header>
+        </div>
+</div>
+ <script type="text/javascript">if (self != top) {document.getElementById("routeHead").style.display="none";}</script>
+
+<div style="background-color: #fff;">
+
+	<div class="row row1 container-fluid" >
+
+    <div class="form-title" style="margin-top: 15px;margin-bottom: 15px;">
+            <span id="org_openo_msb_route_namespaces" name_i18n="org_openo_msb_route_ui_i18n"></span>
+         
+   </div>
+
+	  <div class="row" data-name="route_zone" ms-each-ns="namespaceArray">
+
+	<div class=" col-xs-6 col-sm-4 col-md-4  col-lg-3 ">
+	  <div class="panel panel-primary" >
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-cloud fa-4x"></i>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <div class="huge" ms-attr-title="ns" ms-text="routeUtil.cutString(ns,23)"></div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <a ms-click="viewServiceList(ns)">
+                            <div class="panel-footer">
+                                <span class="pull-left" id="org_openo_msb_route_namespace_view" name_i18n="org_openo_msb_route_ui_i18n"></span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+ 		</div>
+	  </div>
+
+	</div>
+</div>
+
+<script type="text/javascript"	src="../thirdparty/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../thirdparty/jquery.i18n/jquery.i18n.properties.js"></script>
+ <script type="text/javascript" src="../thirdparty/iframeResizer/iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript"	src="../thirdparty/bootstrap/js/bootstrap.min.js"></script>
+<script src="../thirdparty/bootstrap/js/bootstrap-notify.js"></script>
+<script type="text/javascript"	src="../thirdparty/avalon/avalon.js"></script>
+<script src="i18n/loadi18nApp_iui-route_view.js"></script>
+<script src="js/util/routeUtil.js"></script>
+<script type="text/javascript"   src="js/controller/namespaceController.js"></script>
+ <script type="text/javascript">
+
+$(function(){
+
+ loadPropertiesSideMenu('', 'msb-iui-route-i18n', 'i18n/'); 
+ avalon.scan();
+ vm.initNamespaceList();
+
+});
+</script>
+	
+</body>
+</html>

@@ -1,0 +1,164 @@
+[
+    {
+        "RoutePrefix": "msb",
+        "RouteKey": {
+            "PublishPort": "28001",
+            "RouteType": "api",
+            "RouteName": "httpservice",
+            "RouteVersion": ""
+        },
+        "RouteValue": {
+            "kind": "route",
+            "apiVersion": "v1",
+            "status": "1",
+            "metadata": {
+                "name": "httpservice",
+                "version": "",
+                "namespace": "",
+                "serviceName": "httpservice",
+                "serviceVersion": "",
+                "uid": "",
+                "updateTimestamp": "2017-07-06T06:29:09Z",
+                "labels": {
+                    "enable_router": "true"
+                },
+                "annotations": null
+            },
+            "spec": {
+                "visualRange": "0",
+                "url": "/httpservice",
+                "publish_port": "28001",
+                "publish_protocol": "https",
+                "host": "httpservice",
+                "apijson": "/swagger.json",
+                "apijsontype": "1",
+                "metricsUrl": "/admin/metrics",
+                "lb_policy": "ip_hash",
+                "consulServiceName": "httpservice",
+                "useOwnUpstream": "1",
+                "enable_ssl": true,
+                "control": "0",
+                "scenario": 1,
+                "enable_refer_match": "xxxx",
+                "connect_timeout": "",
+                "send_timeout": "120",
+                "read_timeout": "120",
+                "nodes": [
+                    {
+                        "ip": "127.0.0.1",
+                        "port": 2222,
+                        "weight": 0
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "RoutePrefix": "msb",
+        "RouteKey": {
+            "PublishPort": "28002",
+            "RouteType": "api",
+            "RouteName": "httpservice",
+            "RouteVersion": ""
+        },
+        "RouteValue": {
+            "kind": "route",
+            "apiVersion": "v1",
+            "status": "1",
+            "metadata": {
+                "name": "httpservice",
+                "version": "",
+                "namespace": "",
+                "serviceName": "httpservice",
+                "serviceVersion": "",
+                "uid": "",
+                "updateTimestamp": "2017-07-06T06:29:09Z",
+                "labels": {
+                    "enable_router": "true"
+                },
+                "annotations": null
+            },
+            "spec": {
+                "visualRange": "0",
+                "url": "/httpservice",
+                "publish_port": "28002",
+                "publish_protocol": "http",
+                "host": "httpservice",
+                "apijson": "/swagger.json",
+                "apijsontype": "1",
+                "metricsUrl": "/admin/metrics",
+                "lb_policy": "ip_hash",
+                "consulServiceName": "httpservice",
+                "useOwnUpstream": "1",
+                "enable_ssl": true,
+                "control": "0",
+                "scenario": 1,
+                "enable_refer_match": "xxxx",
+                "connect_timeout": "",
+                "send_timeout": "120",
+                "read_timeout": "120",
+                "nodes": [
+                    {
+                        "ip": "127.0.0.1",
+                        "port": 2222,
+                        "weight": 0
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "RoutePrefix": "msb:host",
+        "RouteKey": {
+            "PublishPort": "httpservice",
+            "RouteType": "api",
+            "RouteName": "httpservice",
+            "RouteVersion": ""
+        },
+        "RouteValue": {
+            "kind": "route",
+            "apiVersion": "v1",
+            "status": "1",
+            "metadata": {
+                "name": "httpservice",
+                "version": "",
+                "namespace": "",
+                "serviceName": "httpservice",
+                "serviceVersion": "",
+                "uid": "",
+                "updateTimestamp": "2017-07-06T06:29:09Z",
+                "labels": {
+                    "enable_router": "true"
+                },
+                "annotations": null
+            },
+            "spec": {
+                "visualRange": "0",
+                "url": "/httpservice",
+                "publish_port": "28001|28002",
+                "publish_protocol": "http",
+                "host": "httpservice",
+                "apijson": "/swagger.json",
+                "apijsontype": "1",
+                "metricsUrl": "/admin/metrics",
+                "lb_policy": "ip_hash",
+                "consulServiceName": "httpservice",
+                "useOwnUpstream": "1",
+                "enable_ssl": true,
+                "control": "0",
+                "scenario": 1,
+                "enable_refer_match": "xxxx",
+                "connect_timeout": "",
+                "send_timeout": "120",
+                "read_timeout": "120",
+                "nodes": [
+                    {
+                        "ip": "127.0.0.1",
+                        "port": 2222,
+                        "weight": 0
+                    }
+                ]
+            }
+        }
+    }
+]

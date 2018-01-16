@@ -1,0 +1,172 @@
+
+.baseInfoDiv{
+	width:auto;
+	margin-top:20px;
+	margin-left: 16px;
+}
+
+.detailimg{
+	width: 100px;
+    height: 100px;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-right: 8px;  
+
+}
+
+.serviceimg{
+	font-size: 65px;
+    background-color: #5BC9FF;
+    color: white;
+    padding: 15px;
+}
+
+.baseinfo{
+
+	display: inline-block;
+	height:100px;
+	margin-left: 15px;
+	width: auto;
+	color: #4d5761;
+}
+
+.baseinfo div{
+	margin-bottom:10px;
+}
+
+.servicename{
+	font-family: MicrosoftYaHei,Microsoft YaHei;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 18px;
+    color: #333;
+    display: inline-block;
+}
+
+.greycolor {
+    color: #777;
+}
+
+.greencolor{
+	color: #22C36B;
+}
+
+.baseinfospace{
+	margin-left: 30px
+}
+
+.circle {
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;    
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.circle_green{
+    background: #73cf22;
+}
+
+.circle_red{
+    background: #ff5b55;
+}
+
+.todo-tasklist-date {
+    color: #637b89!important;
+    margin-right: 5px;
+}
+
+.form-title{
+	margin-left:0px;
+	margin-top:20px;
+}
+
+.control-label {
+    text-align: right;
+}
+
+
+.label-protocol {
+    border-radius: 0!important;
+    font-size: 13px!important;
+    font-weight: 300;
+    height: 20px;
+    color: #fff;
+    padding: 3px 6px;
+    text-shadow: none!important;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-width: 10px;
+}
+
+.label-iui {
+    background-color: #67ba1e;
+}
+
+.label-tcp {
+    background-color: #e3b612;
+}
+
+
+table.node {
+    width: 100%;
+}
+
+table.node th:first-child,table.node td:first-child {
+    border-left: 0;
+    text-align:center;
+    padding-left: 0px;
+}
+
+table.node th:last-child,table.node td:last-child  {
+    border-right: 0;
+}
+
+table.node th {
+    font-family: Hiragino Sans GB,Microsoft YaHei,Segoe UI,Arial,"san-serif";
+    font-weight: 400;
+    font-size: 14px;
+    color: #4d5761;
+    line-height: 1;
+    background-color: #f8f8f8;
+    border: 1px solid #e6e6e6;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 20px;
+}
+
+table.node tr {
+    height: 50px;
+}
+
+table.node td {
+    font-family: Hiragino Sans GB,Microsoft YaHei,Segoe UI,Arial,"san-serif";
+    font-weight: 400;
+    font-size: 14px;
+    color: #7c868d;
+    line-height: 1;
+    border-color: #e6e6e6;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    vertical-align: middle;
+    text-align: left;
+    line-height: 2;
+    padding: 0 20px;
+}
+
+table.node tbody tr:hover td {
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-color: #c9e6f2;
+    background-color:#e7f6ff
+}
+
+.closeBtn{
+	text-align: center;
+    margin-bottom: 10px;	
+    margin-top: 30px;
+}

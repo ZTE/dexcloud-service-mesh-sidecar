@@ -1,0 +1,90 @@
+[
+  {
+    "namespace": "default",
+    "serviceName": "apiservice",
+    "serviceVersion": "v1",
+    "publishProtocol": "Http",
+    "publishPort": 20081,
+    "routeType": "api",
+    "routeName": "apiservice",
+    "routeVersion": "v1",
+    "publishUrl": "/api/apiservice/v1"
+  },
+  {
+    "namespace": "default",
+    "serviceName": "apiservice",
+    "serviceVersion": "v1",
+    "publishProtocol": "Https",
+    "publishPort": 20082,
+    "routeType": "api",
+    "routeName": "apiservice",
+    "routeVersion": "v1",
+    "publishUrl": "/api/apiservice/v1"
+  },
+  {
+    "namespace": "default",
+    "serviceName": "iuiservice",
+    "serviceVersion": "v1",
+    "publishProtocol": "Http",
+    "publishPort": 20081,
+    "routeType": "iui",
+    "routeName": "",
+    "routeVersion": "",
+    "publishUrl": "/iui/iuiservice"
+  },
+  {
+    "namespace": "default",
+    "serviceName": "iuiservice",
+    "serviceVersion": "v1",
+    "publishProtocol": "Https",
+    "publishPort": 20082,
+    "routeType": "iui",
+    "routeName": "",
+    "routeVersion": "",
+    "publishUrl": "/iui/iuiservice"
+  },
+   {
+    "namespace": "default",
+    "serviceName": "customservice",
+    "serviceVersion": "v1",
+    "publishProtocol": "Http",
+    "publishPort": 20081,
+    "routeType": "custom",
+    "routeName": "/customservice",
+    "routeVersion": "v1",
+    "publishUrl": "/customservice"
+  },
+  {
+    "namespace": "default",
+    "serviceName": "customservice",
+    "serviceVersion": "v1",
+    "publishProtocol": "Https",
+    "publishPort": 20082,
+    "routeType": "custom",
+    "routeName": "/customservice",
+    "routeVersion": "v1",
+    "publishUrl": "/customservice"
+  },
+  {
+    "namespace": "default",
+    "serviceName": "tcptest",
+    "serviceVersion": "v1",
+    "publishProtocol": "Tcp",
+    "publishPort": 20083,
+    "routeType": "",
+    "routeName": "",
+    "routeVersion": "",
+    "publishUrl": ""
+  },
+  {
+    "namespace": "default",
+    "serviceName": "udptest",
+    "serviceVersion": "v1",
+    "publishProtocol": "Udp",
+    "publishPort": 20084,
+    "routeType": "",
+    "routeName": "",
+    "routeVersion": "",
+    "publishUrl": ""
+  }
+]

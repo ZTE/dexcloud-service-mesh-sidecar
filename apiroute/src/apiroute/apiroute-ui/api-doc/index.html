@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <title>MSB-Swagger UI</title>
+ 
+  <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='css/reset.css' media='print' rel='stylesheet' type='text/css'/>
+  <link href='css/print.css' media='print' rel='stylesheet' type='text/css'/>
+  <style>
+   .footer a{
+    display:none;
+   }
+
+ .loadingImg{
+     border: 4px solid #1dadfc;
+    border-right-color: transparent;
+    border-radius: 25px;
+    width: 36px;
+    height: 36px;
+    animation: three-quarters-loader 1.5s infinite linear;   
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+
+}
+ @-moz-keyframes three-quarters-loader{0%{-moz-transform:rotate(0deg);transform:rotate(0deg)}to{-moz-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes three-quarters-loader{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes three-quarters-loader{0%{-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-moz-transform:rotate(1turn);-ms-transform:rotate(1turn);-webkit-transform:rotate(1turn);transform:rotate(1turn)}}.px-loading-max[_ngcontent-c9]:not(:required){border:5px solid #1dadfc;border-right-color:transparent;border-radius:36px;width:72px;height:72px}.px-loading-max[_ngcontent-c9]:not(:required), .px-loading-medium[_ngcontent-c9]:not(:required){-moz-animation:three-quarters-loader 1.5s infinite linear;-webkit-animation:three-quarters-loader 1.5s infinite linear;animation:three-quarters-loader 1.5s infinite linear;box-sizing:border-box;display:inline-block;position:relative;overflow:hidden;text-indent:-9999px}.px-loading-medium[_ngcontent-c9]:not(:required){border:4px solid #1dadfc;border-right-color:transparent;border-radius:18px;width:36px;height:36px}.px-loading-min[_ngcontent-c9]:not(:required){-moz-animation:three-quarters-loader 1.5s infinite linear;-webkit-animation:three-quarters-loader 1.5s infinite linear;animation:three-quarters-loader 1.5s infinite linear;border:2px solid #1dadfc;border-right-color:transparent;border-radius:9px;width:18px;height:18px}.px-loading-default[_ngcontent-c9]:not(:required), .px-loading-min[_ngcontent-c9]:not(:required){box-sizing:border-box;display:inline-block;position:relative;overflow:hidden;text-indent:-9999px}.px-loading-default[_ngcontent-c9]:not(:required){margin-left:100px;margin-top:100px;border:4px solid #f2f2f2;border-right-color:transparent;border-radius:18px;width:36px;height:36px}</style>
+
+  <script src='lib/object-assign-pollyfill.js' type='text/javascript'></script>
+  <script src='lib/jquery-1.8.0.min.js' type='text/javascript'></script>
+  <script src='lib/jquery.slideto.min.js' type='text/javascript'></script>
+  <script src='lib/jquery.wiggle.min.js' type='text/javascript'></script>
+  <script src='lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
+  <script src='lib/handlebars-4.0.5.js' type='text/javascript'></script>
+  <script src='lib/lodash.min.js' type='text/javascript'></script>
+  <script src='lib/backbone-min.js' type='text/javascript'></script>
+  <script src='swagger-ui.js' type='text/javascript'></script>
+  <script src='lib/highlight.9.1.0.pack.js' type='text/javascript'></script>
+  <script src='lib/highlight.9.1.0.pack_extended.js' type='text/javascript'></script>
+  <script src='lib/jsoneditor.min.js' type='text/javascript'></script>
+  <script src='lib/marked.js' type='text/javascript'></script>
+  <script src='lib/swagger-oauth.js' type='text/javascript'></script>
+  <script src='js/tools.js' type='text/javascript'></script>
+  <!-- Some basic translations -->
+<script src='lang/translator.js' type='text/javascript'></script> 
+
+
+  <script type="text/javascript">
+ function getQueryString(url,name){
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+    var r = url.match(reg); 
+    if (r != null) return unescape(r[2]); 
+    return null;       
+}
+
+    $(function () {
+
+      //i18n
+      var currentLang = navigator.language;   //判断除IE外其他浏览器使用语言
+      if(!currentLang){//判断IE浏览器使用语言
+          currentLang = navigator.browserLanguage;
+      }
+      currentLang=currentLang.toLowerCase().substring(0,2); 
+      $.getScript('lang/'+currentLang+'.js');
+
+      //swagger url
+     var fullUrl= window.location.search.substr(1);
+     var publish_protocol=getQueryString(fullUrl,"publish_protocol").replace(/<[^>]+>/g,"");
+     var publish_port=getQueryString(fullUrl,"publish_port").replace(/<[^>]+>/g,"");
+     var url=getQueryString(fullUrl,"url").replace(/<[^>]+>/g,"");
+     var ip=window.location.host.split(":")[0];
+     var swaggerUrl=publish_protocol+"://"+ip+":"+publish_port+url;
+
+      /*var url = window.location.search.match(/url=([^&]+)/);
+      if (url && url.length > 1) {
+        url = decodeURIComponent(url[1]);
+      } else {
+        url = "/api/microservices/v1/swagger.json";
+      }*/
+
+      hljs.configure({
+        highlightSizeThreshold: 5000
+      });
+
+      // Pre load translate...
+      if(window.SwaggerTranslator) {
+        window.SwaggerTranslator.translate();
+      }
+      window.swaggerUi = new SwaggerUi({
+        url: swaggerUrl,
+        validatorUrl:null,
+        dom_id: "swagger-ui-container",
+        supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+        onComplete: function(swaggerApi, swaggerUi){
+          // if(typeof initOAuth == "function") {
+          //   initOAuth({
+          //     clientId: "your-client-id",
+          //     clientSecret: "your-client-secret-if-required",
+          //     realm: "your-realms",
+          //     appName: "your-app-name",
+          //     scopeSeparator: " ",
+          //     additionalQueryStringParams: {}
+          //   });
+          // }
+
+          if(window.SwaggerTranslator) {
+            window.SwaggerTranslator.translate();
+          }
+        },
+        onFailure: function(data) {
+          log("Unable to Load SwaggerUI");
+           $("#message-bar").html( $("#message-bar").text());
+        },
+        docExpansion: "none",
+        jsonEditor: false,
+        defaultModelRendering: 'schema',
+        showRequestHeaders: false,
+        showOperationIds: false
+      });
+
+      window.swaggerUi.load();
+
+      $("#message-bar").html( $("#message-bar").text());
+
+      function log() {
+        if ('console' in window) {
+          console.log.apply(console, arguments);
+        }
+      }
+  });
+  </script>
+</head>
+
+<body class="swagger-section">
+<div id='header' style="display:none">
+  <div class="swagger-ui-wrap">
+   
+    <form id='api_selector'>
+      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
+      <div id='auth_container'></div>
+      <div class='input'><a id="explore" class="header__btn" href="#" data-sw-translate>Explore</a></div>
+    </form>
+  </div>
+</div>
+
+<div id="message-bar" class="swagger-ui-wrap" data-sw-translate >&nbsp;</div>
+<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+</body>
+  <script type="text/javascript" src="js/iframeResizer/iframeResizer.contentWindow.min.js"></script>
+
+</html>

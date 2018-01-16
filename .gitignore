@@ -1,0 +1,13 @@
+.project
+.classpath
+.settings/
+.vscode/
+target/
+release/
+**/.checkstyle
+.vagrant
+/archives/
+*.jar
+*.zip
+*.tar
+*.gz

@@ -1,0 +1,53 @@
+[
+    {
+        "ServicePrefix": "discover:microservices",
+        "ServiceKey": {
+            "Namespace": "default",
+            "ServiceName": "httpservice",
+            "ServiceVersion": "v1"
+        },
+        "ServiceValue": {
+            "kind": "service",
+            "apiVersion": "v1",
+            "status": "1",
+            "metadata": {
+                "name": "httpservice",
+                "namespace": "",
+                "uid": "",
+                "updateTimestamp": "2017-06-08T07:16:20Z",
+                "labels": {
+                    "enable_router": "true"
+                },
+                "annotations": null
+            },
+            "spec": {
+                "visualRange": "0",
+                "url": "/httpservice",
+                "path": "",
+                "publish_port": "28001|28002",
+                "host": "",
+                "protocol": "REST",
+                "custom": "",
+                "lb_policy": "ip_hash",
+                "enable_ssl": true,
+                "enable_tls": false,
+                "swagger_url": "/swagger.json",
+                "enable_refer_match": "xxxx",
+                "proxy_rule": {
+                    "http_proxy": {
+                        "send_timeout": "120s",
+                        "read_timeout": "120s"
+                    },
+                    "stream_proxy": {}
+                },
+                "nodes": [
+                    {
+                        "ip": "127.0.0.1",
+                        "port": "2222",
+                        "ttl": -1
+                    }
+                ]
+            }
+        }
+    }
+]

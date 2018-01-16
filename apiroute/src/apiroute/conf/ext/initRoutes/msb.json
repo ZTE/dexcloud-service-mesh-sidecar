@@ -1,0 +1,161 @@
+[
+    {
+        "kind": "service",
+        "apiVersion": "v1",
+        "status": "1",
+        "metadata": {
+            "name": "microservices",
+            "version": "v1",
+            "namespace": "",
+            "labels": {}
+        },
+        "spec": {
+            "visualRange": "0",
+            "url": "/api/route/v1",
+            "path": "/api/route/v1",
+            "publish_port": "",
+            "host": "msb",
+            "protocol": "REST",
+            "custom": "",
+            "lb_policy": "",
+            "enable_ssl": false,
+            "enable_tls": false,
+            "swagger_url": "/api/route/v1/swagger.json",
+            "nodes": [
+                {
+                    "ip": "127.0.0.1",
+                    "port": "${app.httpport}"
+                }
+            ]
+        }
+    },
+    {
+        "kind": "service",
+        "apiVersion": "v1",
+        "status": "1",
+        "metadata": {
+            "name": "microservices",
+            "version": "",
+            "namespace": "",
+            "labels": {}
+        },
+        "spec": {
+            "visualRange": "0",
+            "url": "/iui/microservices",
+            "path": "",
+            "publish_port": "",
+            "host": "msb",
+            "protocol": "UI",
+            "custom": "",
+            "lb_policy": "",
+            "enable_ssl": false,
+            "enable_tls": false,
+            "swagger_url": "",
+            "enable_refer_match": "",
+            "proxy_rule": {
+                "http_proxy": {
+                    "send_timeout": "",
+                    "read_timeout": ""
+                },
+                "stream_proxy": {}
+            },
+            "nodes": [
+                {
+                    "ip": "127.0.0.1",
+                    "port": "${app.httpport}"
+                }
+            ]
+        }
+    },
+    {
+        "kind": "service",
+        "apiVersion": "v1",
+        "status": "1",
+        "metadata": {
+            "name": "router_metrics",
+            "version": "v1",
+            "namespace": ""
+        },
+        "spec": {
+            "visualRange": "0",
+            "url": "/admin/microservices/v1",
+            "path": "",
+            "publish_port": "",
+            "host": "",
+            "protocol": "REST",
+            "nodes": [
+                {
+                    "ip": "127.0.0.1",
+                    "port": "${listenport.httpdefaultport}"
+                }
+            ]
+        }
+    },
+    {
+        "kind": "service",
+        "apiVersion": "v1",
+        "status": "1",
+        "metadata": {
+            "name": "msdiscover",
+            "version": "v1",
+            "namespace": ""
+        },
+        "spec": {
+            "visualRange": "0",
+            "url": "/api/microservices/v1",
+            "protocol": "REST",
+            "swagger_url": "/api/microservices/v1/swagger.json",
+            "nodes": [
+                {
+                    "ip": "${discover.ip}",
+                    "port": "${discover.port}"
+                }
+            ]
+        }
+    },
+    {
+        "kind": "service",
+        "apiVersion": "v1",
+        "status": "1",
+        "metadata": {
+            "name": "msdiscover",
+            "version": "v1",
+            "namespace": ""
+        },
+        "spec": {
+            "visualRange": "0",
+            "url": "/iui/microservices",
+            "protocol": "UI",
+            "nodes": [
+                {
+                    "ip": "${discover.ip}",
+                    "port": "${discover.port}"
+                }
+            ]
+        }
+    },
+	{
+        "kind": "service",
+        "apiVersion": "v1",
+        "status": "1",
+        "metadata": {
+            "name": "apigateway_metrics",
+            "version": "v1",
+            "namespace": ""
+        },
+        "spec": {
+            "visualRange": "0",
+            "url": "/admin/microservices/v1",
+            "path": "",
+            "publish_port": "",
+            "host": "",
+            "protocol": "REST",
+            "nodes": [
+                {
+                    "ip": "${apigatewaymetrics.ip}",
+                    "port": "10080"
+                }
+            ]
+        }
+    }
+]

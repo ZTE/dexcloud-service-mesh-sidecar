@@ -1,0 +1,21 @@
+--- 
+apigatewaycfg: 
+  lables: "visualRange:0"
+  customfilterconfig: ""
+  namespace: ""
+  routeway: "ip"
+  routesubdomain: ""
+
+discover: 
+  ip: "127.0.0.1"
+  port: 10081
+  enabled: true
+
+listenport:
+  httpdefaultport: 80
+  httpsdefaultport: 443
+  redisdefaultport: 6379
+
+apigatewaymetrics:
+    ip: ""
+    port: 10080

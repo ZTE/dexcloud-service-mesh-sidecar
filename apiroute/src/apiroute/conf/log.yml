@@ -1,0 +1,14 @@
+#level:Emergency、Alert、Critical、Error、
+#Warn、Notice、Info、Debug
+console:
+  level: Warn
+  
+file:
+  filename: ../apiroute-works/logs/apiroute.log
+  level: Info
+  maxlines: 100000
+  #metric:M
+  maxsize: 30
+  daily: true
+  maxdays: 10
+  rotate: true

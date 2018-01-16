@@ -1,0 +1,324 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "basePath": "/api/router/v1",
+    "paths": {
+        "/conf/defaultports": {
+            "get": {
+                "tags": [
+                    "conf"
+                ],
+                "description": "get default ports",
+                "operationId": "ConfController.GetDefaultPorts",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.HttpHttpsDefaultPorts"
+                        }
+                    },
+                    "500": {
+                        "description": "get ports from config file failed"
+                    }
+                }
+            }
+        },
+        "/namespaces/": {
+            "get": {
+                "tags": [
+                    "namespaces"
+                ],
+                "description": "get all namespaces",
+                "operationId": "NamespacesController.get all namespaces",
+                "responses": {
+                    "200": {
+                        "description": "{[]string} namesapce"
+                    },
+                    "500": {
+                        "description": "get namespaces list error"
+                    }
+                }
+            }
+        },
+        "/routelist/": {
+            "get": {
+                "tags": [
+                    "routelist"
+                ],
+                "description": "get {namespace}'s route abstract info list",
+                "operationId": "RouteListController.get route abstract info list",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "namespace",
+                        "description": "one namespace",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.RouteAbstractInfo"
+                        }
+                    },
+                    "500": {
+                        "description": "read redis failed"
+                    }
+                }
+            }
+        },
+        "/routes/internal": {
+            "get": {
+                "tags": [
+                    "routes"
+                ],
+                "description": "get route detail info by router key",
+                "operationId": "RoutesController.get route detail info",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "publishport",
+                        "description": "publish port.",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "routetype",
+                        "description": "api|iui|custom",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "routename",
+                        "description": "route name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "routeversion",
+                        "description": "route version",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.RouteDetailInfo"
+                        }
+                    },
+                    "403": {
+                        "description": "require fields are nil"
+                    }
+                }
+            }
+        },
+        "/routes/servicename/{servicename}/version/{serviceversion}": {
+            "get": {
+                "tags": [
+                    "routes"
+                ],
+                "description": "get route detail info by servicekey",
+                "operationId": "RoutesController.get route detail info",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "servicename",
+                        "description": "servicename",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "serviceversion",
+                        "description": "serviceversion",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "namespace",
+                        "description": "namespace",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/models.RouteDetailInfo"
+                        }
+                    },
+                    "403": {
+                        "description": "require fields are nil"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.HttpHttpsDefaultPorts": {
+            "title": "HttpHttpsDefaultPorts",
+            "type": "object",
+            "properties": {
+                "httpPort": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "httpsPort": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "models.MetaDataObjet": {
+            "title": "MetaDataObjet",
+            "type": "object",
+            "properties": {
+                "annotations": {},
+                "labels": {
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "uid": {
+                    "type": "string"
+                },
+                "updateTimestamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.NodeObject": {
+            "title": "NodeObject",
+            "type": "object",
+            "properties": {
+                "ip": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "weight": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "models.RouteAbstractInfo": {
+            "title": "RouteAbstractInfo",
+            "type": "object",
+            "properties": {
+                "namespace": {
+                    "type": "string"
+                },
+                "publishPort": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "publishProtocol": {
+                    "type": "string"
+                },
+                "publishUrl": {
+                    "type": "string"
+                },
+                "routeName": {
+                    "type": "string"
+                },
+                "routeType": {
+                    "type": "string"
+                },
+                "routeVersion": {
+                    "type": "string"
+                },
+                "serviceName": {
+                    "type": "string"
+                },
+                "serviceVersion": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.RouteDetailInfo": {
+            "title": "RouteDetailInfo",
+            "type": "object",
+            "properties": {
+                "apiVersion": {
+                    "type": "string"
+                },
+                "kind": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/models.MetaDataObjet"
+                },
+                "spec": {
+                    "$ref": "#/definitions/models.SpecObject"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SpecObject": {
+            "title": "SpecObject",
+            "type": "object",
+            "properties": {
+                "apijson": {
+                    "type": "string"
+                },
+                "apijsontype": {
+                    "type": "string"
+                },
+                "consulServiceName": {
+                    "type": "string"
+                },
+                "control": {
+                    "type": "string"
+                },
+                "enable_ssl": {
+                    "type": "boolean"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "metricsUrl": {
+                    "type": "string"
+                },
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.NodeObject"
+                    }
+                },
+                "publish_port": {
+                    "type": "string"
+                },
+                "publish_protocol": {
+                    "type": "string"
+                },
+                "scenario": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "useOwnUpstream": {
+                    "type": "string"
+                },
+                "visualRange": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

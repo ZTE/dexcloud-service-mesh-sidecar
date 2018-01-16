@@ -1,0 +1,202 @@
+<!--
+
+Copyright (C) 2016 ZTE, Inc. and others. All rights reserved. (ZTE)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title id="org_openo_msb_route_title" name_i18n="org_openo_msb_route_ui_i18n"></title>
+<link
+	href="thirdparty/fontAwesome/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="thirdparty/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" />
+
+  <link href="iui-route/css/base.css" rel="stylesheet" type="text/css" />
+  <link href="iui-route/css/default.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+
+	function setIframeUrl(type){
+
+		    var url;
+	
+			switch(type){
+			  case 1:url="./iui-route/index.html";break;
+			  case 2:url="/iui/msdiscover/index.html";break;
+			  case 3:url="/iui/msdiscover/serviceMng.html?type=add";break;
+			  case 4:url="./iui-route/status.html";break;
+			  case 5:url="./iui-route/status.html?visualRange=1";break;
+		   }
+		
+		
+
+		 $('#msbPage').attr("src",url);   
+	}
+	</script>
+
+</head>
+<body >
+
+
+<div  id="routeHead">
+        <div class="navbar-inner container-fluid" id="top-bar">
+            <header class="row-fluid">            
+            <div class="logoimg"><img class="logo" src="iui-route/img/netnumenLogo.png" alt="Logo"></div>
+            <div class="chineseTitle" id="org_openo_msb_route_chinese_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            <div class="englishTitle" id="org_openo_msb_route_english_name" name_i18n="org_openo_msb_route_ui_i18n"></div>
+            </header>
+        </div>
+</div>
+
+
+
+<div>
+   <div class="page-sidebar" >
+	<div class="sidebar-toggler hidden-xs hidden-sm" ></div>
+ 	<div class="sideBar">
+ 	<ul class="sideBarUl">
+      <li>
+        <a onclick="setIframeUrl(1)" class="router-link-active"><div class="menu"><div class="menu-left"></div><i aria-hidden="true" class="icon fa fa-link"></i><br><label  id="org_openo_msb_route_sideBar_serviceroute" name_i18n="org_openo_msb_route_ui_i18n"></label>	
+        </div>	
+      </a>
+      </li>
+	 <li>
+      <a  onclick="setIframeUrl(2)" ><div class="menu"><div class="menu-left"></div><i aria-hidden="true" class="icon fa fa-cloud"></i><br><label id="org_openo_msb_route_sideBar_servicediscover" name_i18n="org_openo_msb_route_ui_i18n"></label>		
+      </div>
+      </a>
+	</li>
+	  <li>
+      <a  onclick="setIframeUrl(3)" id="serviceregister_sideBar"><div class="menu"><div class="menu-left"></div><i aria-hidden="true" class="icon fa fa-plus-circle"></i><br><label id="org_openo_msb_route_sideBar_serviceregister" name_i18n="org_openo_msb_route_ui_i18n"></label>		
+      </div>
+      </a>
+	</li>
+	<li>
+      <a  onclick="setIframeUrl(4)">
+	  
+      <div class="menu">
+      <div class="menu-left"></div>
+      <i aria-hidden="true" class="icon fa fa-bar-chart"></i><br>
+      <label id="org_openo_msb_route_sideBar_service_status" name_i18n="org_openo_msb_route_ui_i18n"></label>
+      	
+      </div>
+      </a>
+
+       <ul class="sub-menu" id="chart-sub-menu">
+        <li class="nav-item">
+            <a  onclick="setIframeUrl(4)" class="nav-link ">
+                <i class="subicon fa fa-bar-chart"></i>
+                <span class="title">Router</span>
+            </a>
+        </li>
+        <li class="nav-item" style="border-top: 1px solid #536372;">
+            <a onclick="setIframeUrl(5)" class="nav-link ">
+                <i class="subicon fa fa-bar-chart"></i>
+                <span class="title">Apigateway</span>
+            </a>
+        </li>
+        </ul>
+
+	</li>
+
+    
+  </div>
+  </div>
+<div class="page-content" >
+  <div class="page-content-body">
+						
+	<div id="pdiv_page-mainIframeisWare">
+					<iframe src="iui-route/index.html" width="100%" scrolling="no" marginheight="0" frameborder="0" id="msbPage"  name="msbPage"  class="page-mainIframeisWare"  ></iframe>
+	   </div>
+	</div>
+ </div>
+</div>
+<script type="text/javascript"	src="thirdparty/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"	src="thirdparty/iframeResizer/iframeResizer.min.js"></script>
+<script type="text/javascript" src="thirdparty/jquery.i18n/jquery.i18n.properties.js"></script>
+<script src="iui-route/i18n/loadi18nApp_iui-route_view.js"></script>
+<script type="text/javascript">
+
+
+
+$(function(){
+
+
+  var apiRootPath="api";
+   
+  var apiBasePath="/"+apiRootPath+"/route/v1";
+
+$.ajax({
+        "type": 'get',
+        "url":  apiBasePath+"/routes/internal?routetype=api&routename=apigateway_metrics&routeversion=v1",
+        "dataType": "json",       
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+         	$("#chart-sub-menu").hide();
+         }
+
+    });
+
+ loadPropertiesSideMenu('', 'msb-iui-route-i18n', 'iui-route/i18n/');
+
+	//Get window height
+	var winHeight=610;
+                if (window.innerHeight) 
+                	winHeight = window.innerHeight;
+                else if ((document.body) && (document.body.clientHeight)) 
+                	winHeight = document.body.clientHeight;
+                //Through in-depth internal Document to test the body, for the window size
+                if (document.documentElement && document.documentElement.clientHeight ) {
+                    winHeight = document.documentElement.clientHeight;
+
+                }
+	winHeight=winHeight-55;
+$('iframe').iFrameResize({minHeight:winHeight,checkOrigin:false});
+//$('iframe').iFrameResize({checkOrigin:false});
+ $(".sideBar a").on({
+        click: function(){
+        $(".sideBar a").removeClass("router-link-active");
+
+        if($(this).is(".nav-link")){
+			     $(this).parent().parent().parent().children("a").addClass("router-link-active");
+        }
+        else{
+        	$(this).addClass("router-link-active");
+        }
+
+        
+        }
+      });
+
+$(".sidebar-toggler").click(function(){
+  $("body").toggleClass("page-sidebar-closed");
+});
+
+	
+
+});
+
+  function gotoServiceRegisterPage(){
+    $(".sideBar a").removeClass("router-link-active");
+   $("#serviceregister_sideBar").addClass("router-link-active");
+  // setIframeUrl(3);
+  }
+
+</script>
+          				
+
+</body>
+</html>

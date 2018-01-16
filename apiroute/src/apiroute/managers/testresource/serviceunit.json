@@ -1,0 +1,55 @@
+[
+    {
+        "serviceName": "httpservice",
+        "version": "v1",
+        "url": "/httpservice",
+        "protocol": "REST",
+        "visualRange": "0",
+        "lb_policy": "ip_hash",
+        "publish_port": "28001|28002",
+        "namespace": "",
+        "network_plane_type": "",
+        "host": "",
+        "path": "",
+        "nodes": [
+            {
+                "ip": "127.0.0.1",
+                "port": "2222",
+                "lb_server_params": "",
+                "checkType": "",
+                "checkUrl": "",
+                "checkInterval": "",
+                "ttl": "",
+                "checkTimeOut": "",
+                "ha_role": "",
+                "nodeId": "",
+                "status": ""
+            }
+        ],
+        "metadata": [
+            {
+                "key": "",
+                "value": ""
+            }
+        ],
+        "labels": [
+            "enable_router:true"
+        ],
+        "swagger_url": "/swagger.json",
+        "is_manual": false,
+        "enable_ssl": true,
+        "enable_tls": false,
+        "enable_refer_match": "xxxx",
+        "proxy_rule": {
+            "http_proxy": {
+                "send_timeout": "120s",
+                "read_timeout": "120s"
+            },
+            "stream_proxy": {
+                "proxy_timeout": "",
+                "proxy_responses": ""
+            }
+        }
+    }
+]
+
